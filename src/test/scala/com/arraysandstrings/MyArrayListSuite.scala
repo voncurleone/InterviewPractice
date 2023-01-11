@@ -35,5 +35,43 @@ class MyArrayListSuite extends AnyWordSpec {
       list.length should === (11)
       list should === (MyArrayList(1,2,3,4,5,6,7,8,9,10,11))
     }
+
+    "be able to un append before a resize" in {
+      val list = MyArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+      list.length should ===(10)
+
+      list.unAppend()
+      list.length should === (9)
+      list should === (MyArrayList(1,2,3,4,5,6,7,8,9))
+    }
+
+    "be able to un append after a resize" in {
+      val list = MyArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+      list.length should ===(10)
+      list.append(0)
+
+      list.unAppend()
+      list.unAppend()
+      list.length should === (9)
+      list should === (MyArrayList(1,2,3,4,5,6,7,8,9))
+    }
+
+    "be able to insert without resizing" in {
+      val list = MyArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9)
+      list.length should ===(9)
+
+      list.insert(99, 4)
+      list.length should === (10)
+      list should === (MyArrayList(1,2,3,4,99,5,6,7,8,9))
+    }
+
+    "be able to insert causing a resize" in {
+      val list = MyArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+      list.length should ===(10)
+
+      list.insert(99, 4)
+      list.length should === (11)
+      list should === (MyArrayList(1,2,3,4,99,5,6,7,8,9,10))
+    }
   }
 }
