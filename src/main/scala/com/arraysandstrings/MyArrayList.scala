@@ -73,6 +73,8 @@ class MyArrayList[A:ClassTag]() {
     f(array(index))
   }
 
+  def length: Int = arraySize
+
   def apply(index: Int): A =
     if index > -1 && index < arraySize then array(index)
     else throw new IndexOutOfBoundsException
