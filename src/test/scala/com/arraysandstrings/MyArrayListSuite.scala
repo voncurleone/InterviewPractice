@@ -73,5 +73,15 @@ class MyArrayListSuite extends AnyWordSpec {
       list.length should === (11)
       list should === (MyArrayList(1,2,3,4,99,5,6,7,8,9,10))
     }
+
+    "be able to remove an element at a given index" in {
+      val list = MyArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+      list.append(11)
+      list.length should ===(11)
+
+      list.remove(4)
+      list.length should === (10)
+      list should === (MyArrayList(1,2,3,4,6,7,8,9,10,11))
+    }
   }
 }
