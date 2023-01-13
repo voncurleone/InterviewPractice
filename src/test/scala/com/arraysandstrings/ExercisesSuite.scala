@@ -13,7 +13,7 @@ class ExercisesSuite extends AnyWordSpec{
 
     "return true when there are no duplicates" in {
       isUnique("a") should === (true)
-      isUnique("senfurosmp") should === (true)
+      isUnique("senfuromp") should === (true)
       isUnique("qwertyuiplkajshdgf62739485") should === (true)
     }
 
@@ -40,7 +40,7 @@ class ExercisesSuite extends AnyWordSpec{
     "replace all ' ' with '%20" in {
       urlify("hello friend  ".toCharArray) should ===("hello%20friend".toCharArray)
       urlify("NoSpaces".toCharArray) should ===("NoSpaces".toCharArray)
-      urlify("multiple spaces in this      ".toCharArray) should ===("multiple%20spaces%20in%20")
+      urlify("multiple spaces in this      ".toCharArray) should ===("multiple%20spaces%20in%20this".toCharArray)
       intercept[IndexOutOfBoundsException] {
         urlify("multiple spaces in this     ".toCharArray)
       }
