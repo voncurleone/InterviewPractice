@@ -1,11 +1,23 @@
 package com.arraysandstrings
 
 object Exercises {
-  //returns true if the string has all unique characters
-  def isUnique(s: String): Boolean = ???
+  //returns true if the string has all unique characters( ASCII only)
+  def isUnique(s: String): Boolean =
+    //check if the string is longer than the number of ascii charaters(128)
+    if s.length > 128 then return false
+    var set: Set[Char] = Set()
+    for(i <- s.indices) {
+      if set.contains(s.charAt(i)) then return false
+      set = set + s.charAt(i)
+    }
+    true
 
   //returns true if s1 is a permutation of s2
-  def checkPermutation(s1: String, s2: String): Boolean = ???
+  def checkPermutation(s1: String, s2: String): Boolean =
+    if s1.length != s2.length then return false
+    val sorted1 = s1.sorted
+    val sorted2 = s2.sorted
+    sorted1 == sorted2
 
   //replace all spaces with "%20" in place given a character array that has enough space for the added characters
   def urlify(s: Array[Char]): Array[Char] = ???
