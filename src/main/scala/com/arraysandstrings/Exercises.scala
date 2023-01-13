@@ -20,7 +20,31 @@ object Exercises {
     sorted1 == sorted2
 
   //replace all spaces with "%20" in place given a character array that has enough space for the added characters
-  def urlify(s: Array[Char]): Array[Char] = ???
+  def urlify(s: Array[Char]): Array[Char] =
+    //lns => last non space [index]
+    var lns = s.length - (s.reverse.takeWhile(_ == ' ').length + 1)
+
+    for(i <- s.indices) {
+      if s(i) == ' ' then
+        var temp1 = s(i + 1)
+        var temp2 = s(i + 2)
+
+        for(j <- i + 3 to lns) {
+          val hold = s(j)
+          s(j) = temp1
+          temp1 = temp2
+          temp2 = hold
+        }
+
+        s(lns + 1) = temp1
+        s(lns + 2) = temp2
+
+        s(i) = '%'
+        s(i + 1) = '2'
+        s(i + 2) = '0'
+        lns += 2
+    }
+    s
 
   //return true if a permutation of s is a palindrome. ignore casing and non-letter characters
   def palindromePermutation(s: String): Boolean = ???
