@@ -104,7 +104,7 @@ object Exercises {
       val nr = m(r).length - c -1
       val nc = r
       val temp = m(nr)(nc)
-      m(nr)(nc) - m(r)(c)
+      m(nr)(nc) = m(r)(c)
       m(r)(c) = temp
     }
     m
