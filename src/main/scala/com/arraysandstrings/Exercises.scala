@@ -47,18 +47,67 @@ object Exercises {
     s
 
   //return true if a permutation of s is a palindrome. ignore casing and non-letter characters
-  def palindromePermutation(s: String): Boolean = ???
+  def palindromePermutation(s: String): Boolean =
+    val chars = s.filter(_.isLetter).map(_.toLower).groupBy(identity)
+    var used = false //used our char that can have 1 or more occurrences. all others must be 2
+
+    for(t <- chars) {
+      val (_, letters) = t
+      if used then
+        if letters.length % 2 != 0 then return false
+      else
+        if letters.length % 2 != 0 then used = true
+    }
+    true
 
   //return true if s1 is one character away from s2
-  def oneAway(s1: String, s2: String): Boolean = ???
+  def oneAway(s1: String, s2: String): Boolean =
+    var one = false
+
+    for(i <- s1.indices) {
+      if s1(i) != s2(i) then
+        if one then
+          return false
+        else
+          one = true
+    }
+    if s2.length - 1 != s1.length then false else true
 
   //return a compressed version of s(only containing uppercase and lowercase letters) where the number of repeats
   //follows the character
   //ex: aabcccccaaa => a2bc5a3
-  def stringCompression(s: String): String = ???
+  def stringCompression(s: String): String =
+    if s.isEmpty then return ""
+    val builder = StringBuilder("")
+
+    var count = 0
+    var current = s(0)
+    for(c <- s) {
+      if c == current then
+        count += 1
+      else
+        count = 1
+        if count > 1 then builder ++= s"$current$count"
+        else builder ++= current.toString
+        current = c
+    }
+    if count > 1 then builder ++= s"$current$count"
+    else builder ++= current.toString
+    builder.toString()
 
   //rotate a matrix by 90 degrees in place
-  def rotateMatrix(m: Array[Array[Int]]): Array[Array[Int]] = ???
+  def rotateMatrix(m: Array[Array[Int]]): Array[Array[Int]] =
+    for {
+      r <- m.indices
+      c <- 0 until m(r).length - r
+    } {
+      val nr = m(r).length - c -1
+      val nc = r
+      val temp = m(nr)(nc)
+      m(nr)(nc) - m(r)(c)
+      m(r)(c) = temp
+    }
+    m
 
   //if a row has a zero in a matrix then set the whole row to zero in place
   def zeroMatrix(m: Array[Array[Int]]): Array[Array[Int]] = ???
