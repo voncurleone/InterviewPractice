@@ -46,4 +46,22 @@ class ExercisesSuite extends AnyWordSpec{
       }
     }
   }
+
+  "palindromePermutation" must {
+    "remove all non letter characters before analysing the string" in {
+      palindromePermutation("qqwwee666 ") should === (true)
+      palindromePermutation("aaabbb3 ") should === (false)
+    }
+
+    "be able to recognize palindrome permutations" in {
+      palindromePermutation("aaabbcccc") should === (true)
+      palindromePermutation("abbnnnnmmmmmm") should === (true)
+      palindromePermutation("abcabc") should === (true)
+    }
+
+    "return false if there is no permutation that is a palindrome" in {
+      palindromePermutation("aaabbbcc") should === (false)
+      palindromePermutation("ab") should === (false)
+    }
+  }
 }
