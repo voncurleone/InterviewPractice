@@ -91,10 +91,11 @@ object Exercises {
       if c == current then
         count += 1
       else
-        count = 1
         if count > 1 then builder ++= s"$current$count"
         else builder ++= current.toString
         current = c
+        count = 1
+
     }
     if count > 1 then builder ++= s"$current$count"
     else builder ++= current.toString
