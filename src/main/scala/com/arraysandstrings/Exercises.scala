@@ -62,16 +62,21 @@ object Exercises {
 
   //return true if s1 is one character away from s2
   def oneAway(s1: String, s2: String): Boolean =
+    val (short, long) = if s1.length > s2.length then (s2, s1) else (s1, s2)
     var one = false
 
-    for(i <- s1.indices) {
-      if s1(i) != s2(i) then
-        if one then
-          return false
-        else
-          one = true
+    for(i <- short.indices) {
+      if i < s2.length then
+        if s1(i) != s2(i) then
+          if one then
+            return false
+          else
+            one = true
     }
-    if s2.length - 1 != s1.length then false else true
+    if short.length + 1 == long.length && !one then true
+    else
+      if short.length == long.length then true else false
+
 
   //return a compressed version of s(only containing uppercase and lowercase letters) where the number of repeats
   //follows the character
