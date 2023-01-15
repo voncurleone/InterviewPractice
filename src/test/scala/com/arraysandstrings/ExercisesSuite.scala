@@ -87,4 +87,20 @@ class ExercisesSuite extends AnyWordSpec{
       oneAway("pure", "lurl") should === (false)
     }
   }
+
+  "stringCompression" must {
+    "return empty string when given empty string" in {
+      stringCompression("") should === ("")
+    }
+
+    "leave a string that cant be compressed the same" in {
+      stringCompression("asdfgh") should === ("asdfgh")
+      stringCompression("qwertASD") should === ("qwertASD")
+    }
+
+    "compress properly" in {
+      stringCompression("aaaYYYYnMtt") should === ("a3Y4nMt2")
+      stringCompression("tOObbbY") should === ("tO2b3Y")
+    }
+  }
 }
