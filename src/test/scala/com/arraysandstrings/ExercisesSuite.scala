@@ -64,4 +64,27 @@ class ExercisesSuite extends AnyWordSpec{
       palindromePermutation("ab") should === (false)
     }
   }
+
+  "oneAway" must {
+    "provide correct result when strings are not the same length" in {
+      oneAway("pur", "pure") should === (true)
+      oneAway("pure", "pur") should === (true)
+
+      oneAway("pure", "pu") should === (false)
+      oneAway("pu", "pure") should === (false)
+
+      oneAway("pu", "per") should === (false)
+      oneAway("per", "pu") should === (false)
+    }
+
+    "provide correct result when strings are the same length" in {
+      oneAway("pure", "pure") should === (true)
+      oneAway("pure", "pore") should === (true)
+      oneAway("pure", "lure") should === (true)
+      oneAway("pure", "purs") should === (true)
+
+      oneAway("pure", "llre") should === (false)
+      oneAway("pure", "lurl") should === (false)
+    }
+  }
 }
