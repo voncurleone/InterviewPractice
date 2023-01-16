@@ -131,6 +131,28 @@ class ExercisesSuite extends AnyWordSpec{
         Array(16,12,8,4)
       )
       rotateMatrix(in2) should === (exp2)
+
+      intercept[IllegalArgumentException] {
+        val in3 = Array(
+          Array(13, 9, 5, 1),
+          Array(14, 10, 6, 2),
+          Array(15, 11, 7),
+          Array(16, 12, 8, 4)
+        )
+
+        rotateMatrix(in3)
+      }
+
+      intercept[IllegalArgumentException] {
+        val in3 = Array(
+          Array(13, 9, 5, 1, 0),
+          Array(14, 10, 6, 2, 0),
+          Array(15, 11, 7, 8, 0),
+          Array(16, 12, 8, 4, 0)
+        )
+
+        rotateMatrix(in3)
+      }
     }
   }
 }
