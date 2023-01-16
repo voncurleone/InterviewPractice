@@ -101,17 +101,33 @@ object Exercises {
     else builder ++= current.toString
     builder.toString()
 
-  //rotate a matrix by 90 degrees in place
+  //rotate a n x n matrix by 90 degrees in place
   def rotateMatrix(m: Array[Array[Int]]): Array[Array[Int]] =
-    for {
-      r <- m.indices
-      c <- 0 until m(r).length - r
-    } {
-      val nr = m(r).length - c -1
-      val nc = r
-      val temp = m(nr)(nc)
-      m(nr)(nc) = m(r)(c)
-      m(r)(c) = temp
+    val len = m.length
+    for(a <- m) {
+      if a.length != m.length then throw new IllegalArgumentException("Matrix must be n x n")
+    }
+
+    for(r <- 0 until len / 2) {
+      val first = r
+      val last = len - 1 - first
+
+      for(c <- first until last) {
+        val offset = c - first
+        val top = m(first)(c)
+
+        //left to top
+        m(first)(c) = m(last - offset)(first)
+
+        //bottom to left
+        m(last - offset)(first) = m(last)(last - offset)
+
+        //right to bottom
+        m(last)(last - offset) = m(c)(last)
+
+        //top to right
+        m(c)(last) = top
+      }
     }
     m
 
