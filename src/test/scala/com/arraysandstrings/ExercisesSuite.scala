@@ -155,4 +155,59 @@ class ExercisesSuite extends AnyWordSpec{
       }
     }
   }
+
+  "zeroMatrix" must {
+    "throw exception if input matrix is not m x n" in {
+      val in = Array(
+        Array(13, 9, 5, 1, 0),
+        Array(14, 10, 6, 2, 0),
+        Array(15, 11, 7, 8, 0),
+        Array(16, 12, 8, 4, 0)
+      )
+
+      zeroMatrix(in)
+      val in2 = Array(
+        Array(13, 9, 5, 1, 0),
+        Array(14, 10, 6, 2, 0),
+        Array(15, 11, 7, 8),
+        Array(16, 12, 8, 4, 0)
+      )
+
+      intercept[IllegalArgumentException] {
+        zeroMatrix(in2)
+      }
+    }
+
+    "zero an array if it contains s zero" in {
+      val in = Array(
+        Array(0, 9, 5, 1, 1),
+        Array(14, 10, 6, 2, 1),
+        Array(15, 11, 7, 8, 1),
+        Array(16, 12, 8, 4, 0)
+      )
+      val exp = Array(
+        Array(0, 0, 0, 0, 0),
+        Array(14, 10, 6, 2, 1),
+        Array(15, 11, 7, 8, 1),
+        Array(0, 0, 0, 0, 0)
+      )
+
+      zeroMatrix(in) should === (exp)
+
+      val in2 = Array(
+        Array(1, 9, 5, 1, 1),
+        Array(14, 10, 0, 2, 1),
+        Array(15, 0, 7, 8, 1),
+        Array(16, 12, 8, 4, 1)
+      )
+      val exp2 = Array(
+        Array(1, 9, 5, 1, 1),
+        Array(0, 0, 0, 0, 0),
+        Array(0, 0, 0, 0, 0),
+        Array(16, 12, 8, 4, 1)
+      )
+
+      zeroMatrix(in2) should === (exp2)
+    }
+  }
 }
