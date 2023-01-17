@@ -105,7 +105,7 @@ object Exercises {
   def rotateMatrix(m: Array[Array[Int]]): Array[Array[Int]] =
     val len = m.length
     for(a <- m) {
-      if a.length != m.length then throw new IllegalArgumentException("Matrix must be n x n")
+      if a.length != len then throw new IllegalArgumentException("Matrix must be n x n")
     }
 
     for(r <- 0 until len / 2) {
@@ -132,7 +132,16 @@ object Exercises {
     m
 
   //if a row has a zero in a matrix then set the whole row to zero in place
-  def zeroMatrix(m: Array[Array[Int]]): Array[Array[Int]] = ???
+  def zeroMatrix(m: Array[Array[Int]]): Array[Array[Int]] =
+    val len = m(0).length
+    for(a <- m) {
+      if len != a.length then throw new IllegalArgumentException("Array not m x n")
+    }
+
+    for(a <- m) {
+      if a.contains(0) then for (index <- a.indices) { a(index) = 0 }
+    }
+    m
 
   //return true if s1 is a rotation of s2 only using the substring method
   def stringRotation(s1: String, s2: String): Boolean = ???
