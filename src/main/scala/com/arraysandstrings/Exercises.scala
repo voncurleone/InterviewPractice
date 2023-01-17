@@ -143,6 +143,17 @@ object Exercises {
     }
     m
 
-  //return true if s1 is a rotation of s2 only using the substring method
-  def stringRotation(s1: String, s2: String): Boolean = ???
+  //return true if s1 is a rotation of s2 only using the substring method(also true if s1 == s2)
+  def stringRotation(s1: String, s2: String): Boolean =
+    require(s1.length == s2.length)
+    if s1 == s2 then return true
+
+    for(i <- s1.indices) {
+      if s1.substring(i) == s2.substring(0, s2.length - i) then
+        if s1.substring(0, i) == s2.substring(s2.length - i) then
+          return true
+    }
+
+
+    false
  }
