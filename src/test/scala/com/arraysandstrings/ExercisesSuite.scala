@@ -210,4 +210,32 @@ class ExercisesSuite extends AnyWordSpec{
       zeroMatrix(in2) should === (exp2)
     }
   }
+
+  "stringRotation" must {
+    "return true for identical strings" in {
+      stringRotation("12345", "12345") should === (true)
+    }
+
+    "find 1 rotation left or right" in {
+      stringRotation("12345", "23451") should === (true)
+      stringRotation("12345", "51234") should === (true)
+    }
+
+    "throw exception if strings have different length" in {
+      intercept[IllegalArgumentException] {
+        stringRotation("12", "123")
+      }
+    }
+
+    "Return false when strings are not a rotation" in {
+      stringRotation("12345", "34567") should === (false)
+      stringRotation("nbvcxz", "qwerty") should === (false)
+    }
+
+    "other amounts of rotation in both directions" in {
+      stringRotation("1234", "3412") should === (true)
+      stringRotation("1234567", "4567123") should === (true)
+      stringRotation("1234567", "6712345") should === (true)
+    }
+  }
 }
