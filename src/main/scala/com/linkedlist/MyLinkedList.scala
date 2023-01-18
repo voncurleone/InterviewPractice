@@ -15,7 +15,6 @@ class MyLinkedList[A]() {
   def removeTail(): Unit = ???
   def remove(index: Int): Unit = ???
   def isEmpty: Boolean = head == End
-  def appendNode(node: MyNode[A]): Unit = ???
 
   //exercises
   def removeDupes(): Unit = ???
@@ -24,10 +23,6 @@ class MyLinkedList[A]() {
   def partition(): Unit = ???
   def sum(list: MyLinkedList[A]): MyLinkedList[A] = ???
   def palindrome: Boolean = ???
-  //def intersection(list: MyLinkedList[A]): MyNode[A] = ???
-  //def loopDetection: MyNode[A] = ???
-
-
 }
 
 object MyLinkedList {
