@@ -1,7 +1,7 @@
 package com.linkedlist
 
 sealed trait MyNode[+A]
-case class Node[A](var elem: A, next: MyNode[A] = End) extends MyNode[A]
+case class Node[A](var elem: A, var next: MyNode[A] = End) extends MyNode[A]
 case object End extends MyNode[Nothing]
 
 class MyLinkedList[A]() {
