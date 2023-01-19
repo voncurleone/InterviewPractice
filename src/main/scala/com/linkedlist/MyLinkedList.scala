@@ -39,7 +39,7 @@ class MyLinkedList[A]() {
         case Node(e, n) =>
           if elem != e then false
           else loop(next, n)
-      case End => true
+      case End => if n2 == End then true else false
 
     obj match
       case list: MyLinkedList[A] =>
