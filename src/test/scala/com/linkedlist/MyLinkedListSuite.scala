@@ -28,6 +28,9 @@ class MyLinkedListSuite extends AnyWordSpec {
       val list = MyLinkedList(1,2)
       list should !== (MyLinkedList(2,1))
       MyLinkedList(1) should !== (MyLinkedList(1,2))
+
+      MyLinkedList() should !== (MyLinkedList(1))
+      MyLinkedList(1) should !== (MyLinkedList())
     }
 
     "implement append" must {
@@ -123,6 +126,54 @@ class MyLinkedListSuite extends AnyWordSpec {
         list.removeHead()
         list.length should === (0)
         list should === (MyLinkedList())
+      }
+    }
+
+    "implement removeTail" must {
+      "throw exception when called on an empty list" in {
+        intercept[IllegalStateException] {
+          MyLinkedList().removeTail()
+        }
+      }
+
+      "remove the tail of a list that contains elements" in {
+        val list = MyLinkedList(1,2,3)
+        list.removeTail()
+        list.length should === (2)
+        list should === (MyLinkedList(1,2))
+
+        val l = MyLinkedList(1)
+        l.removeTail()
+        list.length should === (0)
+        list should === (MyLinkedList())
+      }
+    }
+
+    "implement remove" must {
+      "throw exception if index is < 0 or >= length" in {
+        val list = MyLinkedList(1,2,3)
+
+        intercept[IllegalArgumentException] {
+          list.remove(-1)
+        }
+
+        intercept[IllegalArgumentException] {
+          list.remove(3)
+        }
+      }
+
+      "remove from any index" in {
+        val list = MyLinkedList(1,2,3,4,5,6)
+
+        list.remove(0)
+        list should === (MyLinkedList(2,3,4,5,6))
+
+        list.remove(2)
+        list should === (MyLinkedList(2,3,5,6))
+
+        list.remove(3)
+        list should === (MyLinkedList(2,3,5))
+        list.length should === (3)
       }
     }
   }
