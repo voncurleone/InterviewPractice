@@ -51,7 +51,7 @@ class MyLinkedList[A]() {
   def removeDupes(): Unit = ???
   def apply(index: Int): A = ???
   def deleteMiddle(): Unit = ???
-  def partition(): Unit = ???
+  def partition(elem: A): Unit = ???
   def sum(list: MyLinkedList[A]): MyLinkedList[A] = ???
   def palindrome: Boolean = ???
 }
