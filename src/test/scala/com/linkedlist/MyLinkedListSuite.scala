@@ -176,5 +176,95 @@ class MyLinkedListSuite extends AnyWordSpec {
         list.length should === (3)
       }
     }
+
+    "implement removeDupes" must {
+      "not affect the list if it has no duplicates" in {
+        val list = MyLinkedList(1,2,3,4)
+        list.removeDupes()
+        list should === (MyLinkedList(1,2,3,4))
+
+        val list2 =  MyLinkedList()
+        list2.removeDupes()
+        list2 should === (MyLinkedList())
+      }
+
+      "remove duplicates" in {
+        val list = MyLinkedList(1,1,2,3,4,5,6,6)
+        list.removeDupes()
+        list should === (MyLinkedList(1,2,3,4,5,6))
+        list.length should === (6)
+
+        val list2 = MyLinkedList(1,2,3,4,2,5,6,7,6)
+        list2.removeDupes()
+        list2.length should === (6)
+        list2 should === (MyLinkedList(1,2,3,4,5,6))
+      }
+    }
+
+    "implement apply" must {
+      "throw exception if the indexes are out of bounds" in {
+        val list = MyLinkedList(1,2,3)
+
+        intercept[IllegalArgumentException] {
+          list(-1)
+        }
+
+        intercept[IllegalArgumentException] {
+          list(3)
+        }
+
+        intercept[IllegalArgumentException] {
+          MyLinkedList()(0)
+        }
+      }
+
+      "return correct value" in {
+        val list = MyLinkedList(1,2,3)
+
+        list(0) should === (1)
+        list(1) should === (2)
+        list(2) should === (3)
+      }
+    }
+
+    "implement deleteMiddle" must {
+      "return empty when called by an empty list" in {
+        val list = MyLinkedList()
+
+        list.deleteMiddle()
+        list should === (MyLinkedList)
+        list.length should === (0)
+      }
+
+      "delete middle in a list with an odd length" in {
+        val list = MyLinkedList(1,2,3)
+        val list2 = MyLinkedList(1,2,3,4,5)
+
+        list.deleteMiddle()
+        list should === (MyLinkedList(1,3))
+        list.length should === (2)
+
+        list2.deleteMiddle()
+        list2 should === (MyLinkedList(1,2,4,5))
+        list2.length should === (4)
+      }
+
+      "delete middle in a list with an even length" in {
+        val list = MyLinkedList(1,2)
+        val list2 = MyLinkedList(1,2,3,4)
+
+        list.deleteMiddle()
+        list should === (MyLinkedList(2))
+        list.length should === (1)
+
+        list2.deleteMiddle()
+        list2 should === (MyLinkedList(1,3,4))
+        list2.length should === (3)
+      }
+    }
+
+    "implement partition" must {
+
+    }
   }
 }
