@@ -340,5 +340,22 @@ class MyLinkedListSuite extends AnyWordSpec {
         sum2 should === (MyLinkedList(2,2))
       }
     }
+
+    "implement palindrome" must {
+      "return true for lists that are empty or have a length of 1" in {
+        MyLinkedList().palindrome should === (true)
+        MyLinkedList(1).palindrome should === (true)
+      }
+
+      "return true for even and odd length palindromes" in {
+        MyLinkedList(1,2,1) should === (true)
+        MyLinkedList(1,2,2,1) should === (true)
+      }
+
+      "return true if there is a large number of middle elems" in {
+        MyLinkedList(1,2,2,2,1).palindrome should === (true)
+        MyLinkedList(1,2,2,2,2,1).palindrome should === (true)
+      }
+    }
   }
 }
