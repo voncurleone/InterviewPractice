@@ -264,7 +264,81 @@ class MyLinkedListSuite extends AnyWordSpec {
     }
 
     "implement partition" must {
+      "produces empty list when list is initially empty" in {
+        val list = MyLinkedList[Int]()
+        list.partition(5)
+        list should === (MyLinkedList())
+        list.length should === (0)
+      }
 
+      "reverse list if elem given as input is > all in list" in {
+        val list = MyLinkedList(5,8,1,3,2,9)
+        list.partition(10)
+        list.length should === (6)
+        list should === (MyLinkedList(9,2,3,1,8,5))
+      }
+
+      "stay the same if elem given < all elems in the list" in {
+        val list = MyLinkedList(5,8,1,3,2,9)
+        list.partition(0)
+        list.length should === (6)
+        list should === (MyLinkedList(5,8,1,3,2,9))
+      }
+
+      "partition correctly if elem given is in the range [smallestInList, LargestInList]" in {
+        val l = MyLinkedList(5,8,1,3,2,9)
+        var list = l
+        list.partition(3)
+        list.length should === (6)
+        list should === (MyLinkedList(2,1,5,8,3,9))
+
+        list = l
+        list.partition(5)
+        list.length should === (6)
+        list should === (MyLinkedList(2,3,1,5,8,9))
+
+        list = l
+        list.partition(9)
+        list.length should === (6)
+        list should === (MyLinkedList(2,3,1,8,5,9))
+
+        list = MyLinkedList(9,3,5,8,6)
+        list.partition(6)
+        list.length should === (5)
+        list should === (5,3,9,8,6)
+      }
+    }
+
+    "implement sum" must {
+      "stay empty with two empty lists" in {
+        val list = MyLinkedList()
+        val sum = list.sum(MyLinkedList())
+        sum should === (MyLinkedList())
+      }
+
+      "become the non empty list if one is empty" in {
+        val list = MyLinkedList(1,2,3)
+        val sum = list.sum(MyLinkedList())
+        sum.length should === (3)
+        sum should === (MyLinkedList(1,2,3))
+
+        val list2 = MyLinkedList[Int]()
+        val sum2 = list2.sum(list)
+        sum2.length should === (3)
+        sum2 should === (list)
+      }
+
+      "produce the correct sum when both lists are nonEmpty" in {
+        val list = MyLinkedList(7,1,6)
+        val sum = list.sum(MyLinkedList(5,9,5))
+        sum.length should === (4)
+        sum should === (2,1,2,1)
+
+        val list2 = MyLinkedList(1,2)
+        val sum2 = list2.sum(MyLinkedList(1))
+        sum2.length should === (2)
+        sum2 should === (MyLinkedList(2,2))
+      }
     }
   }
 }
