@@ -348,8 +348,8 @@ class MyLinkedListSuite extends AnyWordSpec {
       }
 
       "return true for even and odd length palindromes" in {
-        MyLinkedList(1,2,1) should === (true)
-        MyLinkedList(1,2,2,1) should === (true)
+        MyLinkedList(1,2,1).palindrome should === (true)
+        MyLinkedList(1,2,2,1).palindrome should === (true)
       }
 
       "return true if there is a large number of middle elems" in {
