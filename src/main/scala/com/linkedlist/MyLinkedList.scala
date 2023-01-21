@@ -127,9 +127,24 @@ class MyLinkedList[A]() {
       case _ => false
 
   //exercises
-  def removeDupes(): Unit = ???
-  def apply(index: Int): A = ???
-  def deleteMiddle(): Unit = ???
+  def removeDupes(): Unit = ??? //probably dont want to use remove, remove the node manually
+
+  def apply(index: Int): A =
+    require(index > -1 && index < size)
+    @tailrec
+    def loop(i: Int, current: MyNode): A = current match
+      case Node(e: A, n) =>
+        if i == 0 then e
+        else loop(i - 1, n)
+      case End => throw new IllegalStateException
+    loop(index, head)
+
+  def deleteMiddle(): Unit =
+    if size == 0 then ()
+    else
+      val index = size / 2
+      remove(index)
+
   def partition(elem: A): Unit = ???
   def sum(list: MyLinkedList[A]): MyLinkedList[A] = ???
   def palindrome: Boolean = ???
