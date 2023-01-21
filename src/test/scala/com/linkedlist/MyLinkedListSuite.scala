@@ -232,7 +232,7 @@ class MyLinkedListSuite extends AnyWordSpec {
         val list = MyLinkedList()
 
         list.deleteMiddle()
-        list should === (MyLinkedList)
+        list should === (MyLinkedList())
         list.length should === (0)
       }
 
@@ -254,11 +254,11 @@ class MyLinkedListSuite extends AnyWordSpec {
         val list2 = MyLinkedList(1,2,3,4)
 
         list.deleteMiddle()
-        list should === (MyLinkedList(2))
+        list should === (MyLinkedList(1))
         list.length should === (1)
 
         list2.deleteMiddle()
-        list2 should === (MyLinkedList(1,3,4))
+        list2 should === (MyLinkedList(1,2,4))
         list2.length should === (3)
       }
     }
