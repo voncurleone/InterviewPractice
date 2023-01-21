@@ -144,8 +144,8 @@ class MyLinkedListSuite extends AnyWordSpec {
 
         val l = MyLinkedList(1)
         l.removeTail()
-        list.length should === (0)
-        list should === (MyLinkedList())
+        l.length should === (0)
+        l should === (MyLinkedList())
       }
     }
 
