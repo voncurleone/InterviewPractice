@@ -77,8 +77,39 @@ class MyLinkedList[A]() {
         case _ => throw new IllegalStateException
     loop(head)
 
-  def remove(index: Int): Unit = ???
+  def remove(index: Int): Unit =
+    require(index > -1 && index < size)
+    @tailrec
+    def loop(count: Int, current: MyNode, previous: MyNode = End): Unit = current match
+      case Node(_, next) =>
+        if count == 0 then previous match
+          case p @ Node(_, _) =>
+            p.next = next
+            size -= 1
+          case End =>
+            head = next
+            size -= 1
+          case _ => throw new IllegalStateException
+        else loop(count - 1, next, current)
+      case _ => throw new IllegalStateException
+    loop(index, head)
+
   def isEmpty: Boolean = head == End
+
+  override def toString: String =
+    val builder = StringBuilder("")
+    builder ++= "MyLinkedList("
+    @tailrec
+    def loop(n: MyNode): Unit = n match
+      case Node(e, End) => builder ++= s"$e"
+      case Node(e, next) =>
+        builder ++= s"$e, "
+        loop(next)
+      case _ => throw new IllegalStateException
+
+    loop(head)
+    builder ++= s")"
+    builder.toString()
 
   override def equals(obj: Any): Boolean =
     @tailrec
