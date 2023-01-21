@@ -25,10 +25,58 @@ class MyLinkedList[A]() {
 
     loop(head)
 
-  def prepend(elem: A): Unit = ???
-  def insert(elem: A, index: Int): Unit = ???
-  def removeHead(): Unit = ???
-  def removeTail(): Unit = ???
+  def prepend(elem: A): Unit =
+    val n = Node(elem, head)
+    head = n
+    size += 1
+
+  def insert(elem: A, index: Int): Unit =
+    require(index > -1 && index <= size)
+    @tailrec
+    def loop(count: Int, current: MyNode, previous: MyNode = End): Unit =
+      if count == 0 then
+        if head == End then
+          val n = Node(elem, End)
+          head = n
+          size += 1
+        else previous match
+          case p @ Node(_, _) =>
+            val n = Node(elem, current)
+            p.next = n
+            size += 1
+          case _ =>
+            if index == 0 then
+              val n = Node(elem, current)
+              head = n
+              size += 1
+            else throw new IllegalStateException("adding to front")
+      else current match
+        case c @ Node(_, _) =>
+          loop(count - 1, c.next, current)
+        case _ => throw new IllegalStateException("adding else where")
+    loop(index, head)
+
+  def removeHead(): Unit = head match
+    case Node(_, next) =>
+      head = next
+      size -= 1
+    case _ => throw new IllegalStateException
+
+  def removeTail(): Unit =
+    if size == 0 then throw new IllegalStateException
+    @tailrec
+    def loop(current: MyNode): Unit = current match
+      case n @ Node(_, Node(_, End)) =>
+        n.next = End
+        size -= 1
+      case Node(_, End) =>
+        head = End
+        size -= 1
+      case _ => current match
+        case Node(_, next) => loop(next)
+        case _ => throw new IllegalStateException
+    loop(head)
+
   def remove(index: Int): Unit = ???
   def isEmpty: Boolean = head == End
 
