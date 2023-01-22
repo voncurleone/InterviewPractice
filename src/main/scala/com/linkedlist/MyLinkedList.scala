@@ -1,6 +1,7 @@
 package com.linkedlist
 
-import scala.annotation.{tailrec, targetName}
+import scala.annotation.tailrec
+import scala.math.Ordered.orderingToOrdered
 
 sealed trait MyNode
 case class Node[A](var elem: A, var next: MyNode = End) extends MyNode
@@ -127,7 +128,21 @@ class MyLinkedList[A]() {
       case _ => false
 
   //exercises
-  def removeDupes(): Unit = ??? //probably dont want to use remove, remove the node manually
+  def removeDupes(): Unit =
+    val list = MyLinkedList[A]()
+    var seen = Set[A]()
+    @tailrec
+    def loop(current: MyNode): Unit = current match
+      case End =>
+        head = list.head
+        size = list.size
+      case Node(elem: A, next) =>
+        if seen.contains(elem) then loop(next)
+        else
+          list.append(elem)
+          seen = seen + elem
+          loop(next)
+    loop(head)
 
   def apply(index: Int): A =
     require(index > -1 && index < size)
@@ -145,7 +160,25 @@ class MyLinkedList[A]() {
       val index = size / 2
       remove(index)
 
-  def partition(elem: A): Unit = ???
+  //scalac: Error: assertion failed: TS[2546377, 2546376, 2546375] attempted to take ownership of A which is already owned by committable TS[2546720, 2546377, 2546376, 2546375]
+  /*def partition(element: A): Unit =
+    val list = MyLinkedList[A]()
+    var seen = Set[A]()
+    @tailrec
+    def loop(current: MyNode): Unit = current match
+      case End =>
+        head = list.head
+        size = list.size
+      case Node(elem: A, next) =>
+        if elem > element then
+          list.append(elem)
+          loop(next)
+        else
+          list.prepend(elem)
+          loop(next)
+    loop(head)*/
+  def partition(element: A): Unit = ???
+
   def sum(list: MyLinkedList[A]): MyLinkedList[A] = ???
   def palindrome: Boolean = ???
 }
