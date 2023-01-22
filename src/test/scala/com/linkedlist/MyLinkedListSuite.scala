@@ -196,8 +196,8 @@ class MyLinkedListSuite extends AnyWordSpec {
 
         val list2 = MyLinkedList(1,2,3,4,2,5,6,7,6)
         list2.removeDupes()
-        list2.length should === (6)
-        list2 should === (MyLinkedList(1,2,3,4,5,6))
+        list2.length should === (7)
+        list2 should === (MyLinkedList(1,2,3,4,5,6,7))
       }
     }
 
