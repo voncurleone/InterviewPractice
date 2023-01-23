@@ -179,8 +179,17 @@ class MyLinkedList[A]() {
     loop(head)*/
   def partition(element: A): Unit = ???
 
-  def sum(list: MyLinkedList[A]): MyLinkedList[A] = ???
-  def palindrome: Boolean = ???
+  def sum(list: MyLinkedList[A]): MyLinkedList[A] = ??? //need to think about this.. A doesn't have + method. most likely cant implement with the way I have implemented the rest of MyLinkedList
+
+  def palindrome: Boolean =
+    var stack = List[A]()
+    @tailrec
+    def loop(node: MyNode): Boolean = node match
+      case End => true
+      case Node(elem: A, next) =>
+        if stack.contains(elem) then ???
+        else ???
+    loop(head)
 }
 
 object MyLinkedList {
