@@ -44,10 +44,27 @@ sealed abstract class MyList[+A] {
     loop(i, this)
 
   @throws[IllegalArgumentException]("if n < 0")
-  def take(n: Int): MyList[A]
+  def take(n: Int): MyList[A] =
+    if n < 0 then throw new IllegalArgumentException("n is < 0")
+    @tailrec
+    def loop(i: Int, list: MyList[A], acc: MyList[A] = empty[A]): MyList[A] = list match
+      case Cons(head, tail) =>
+        if i == 0 then acc.reverse
+        else loop(i - 1, tail, head :: acc)
+      case Empty => acc.reverse
+    loop(n,this)
+
 
   @throws[IllegalArgumentException]("if n < 0")
-  def drop(n: Int): MyList[A]
+  def drop(n: Int): MyList[A] =
+    if n < 0 then throw new IllegalArgumentException("n is < 0")
+    @tailrec
+    def loop(i: Int, list: MyList[A]): MyList[A] = list match
+      case Empty => empty[A]
+      case Cons(_, tail) =>
+        if i == 0 then list
+        else loop(i - 1, tail)
+    loop(n, this)
 
   def length: Int =
     @tailrec
@@ -56,9 +73,14 @@ sealed abstract class MyList[+A] {
       case Empty => acc
     loop(this)
 
-  def reverse: MyList[A]
+  def reverse: MyList[A] =
+    @tailrec
+    def loop(list: MyList[A], acc: MyList[A] = empty[A]): MyList[A] = list match
+      case Cons(head, tail) => loop(tail, head :: acc)
+      case Empty => acc
+    loop(this)
 
-  def append[B >: A](m: MyList[B]): MyList[B]
+  def append[B >: A](m: MyList[B]): MyList[B] = ???
 
   def contains[B >: A](target: B): Boolean =
     @tailrec
@@ -95,11 +117,11 @@ case class Cons[A](head: A, tail: MyList[A]) extends MyList[A] {
   //def toList: List[A] = ???
   def isEmpty: Boolean = false
   //def apply(i: Int): A = ???
-  def take(n: Int): MyList[A] = ???
-  def drop(n: Int): MyList[A] = ???
+  //def take(n: Int): MyList[A] = ???
+  //def drop(n: Int): MyList[A] = ???
   //def length: Int = ???//1 + tail.length
-  def reverse: MyList[A] = ???
-  def append[B >: A](m: MyList[B]): MyList[B] = ???
+  //def reverse: MyList[A] = ???
+  //def append[B >: A](m: MyList[B]): MyList[B] = ???
   //def contains[B >: A](target: B): Boolean = head == ???//target || tail.contains(target)
   //def mkString(init: String, sep: String, end: String): String = ???
 }
@@ -113,11 +135,11 @@ case object Empty extends MyList[Nothing] {
   def head: Nothing = throw new NoSuchElementException("head of empty list")
   def tail: Nothing = throw new NoSuchElementException("tail of empty list")
   override def apply(i: Int): Nothing = throw new NoSuchElementException("apply on empty list")
-  def take(n: Int): MyList[Nothing] = this
-  def drop(n: Int): MyList[Nothing] = this
+  override def take(n: Int): MyList[Nothing] = this
+  override def drop(n: Int): MyList[Nothing] = this
   override def length: Int = 0
-  def reverse: MyList[Nothing] = this
-  def append[B](m: MyList[B]): MyList[B] = m
+  override def reverse: MyList[Nothing] = this
+  override def append[B](m: MyList[B]): MyList[B] = m
   override def contains[B](target: B): Boolean = false
   override def mkString(init: String, sep: String, end: String): String = init + end
 }
