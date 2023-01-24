@@ -80,7 +80,12 @@ sealed abstract class MyList[+A] {
       case Empty => acc
     loop(this)
 
-  def append[B >: A](m: MyList[B]): MyList[B] = ???
+  def append[B >: A](m: MyList[B]): MyList[B] =
+    @tailrec
+    def loop(list: MyList[B], acc: MyList[B] = this.reverse): MyList[B] = list match
+      case Cons(head, tail) => loop(tail, head :: acc)
+      case Empty => acc.reverse
+    loop(m)
 
   def contains[B >: A](target: B): Boolean =
     @tailrec
