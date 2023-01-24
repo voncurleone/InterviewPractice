@@ -183,7 +183,7 @@ class MyLinkedList[A]() {
 
   def palindrome: Boolean =
     var stack = List[A]()
-    @tailrec
+    //@tailrec
     def loop(node: MyNode): Boolean = node match
       case End => true
       case Node(elem: A, next) =>
