@@ -154,6 +154,14 @@ object MyList {
 
   def empty[A]: MyList[A] = Empty
 
-  def flatten[A](l: MyList[MyList[A]]): MyList[A] = ???
+  def flatten[A](l: MyList[MyList[A]]): MyList[A] =
+    if l.isEmpty then return empty[A]
+    @tailrec
+    def loop(list: MyList[MyList[A]], inList: MyList[A], acc: MyList[A] = empty[A]): MyList[A] = list match
+      case Cons(head, tail) => inList match
+        case Cons(inHead, inTail) => loop(list, inTail, inHead :: acc)
+        case Empty => loop(tail, head, acc)
+      case Empty => acc.reverse
+    loop(l.tail, l.head)
 }
 
