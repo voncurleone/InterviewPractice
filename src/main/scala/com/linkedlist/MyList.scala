@@ -34,6 +34,7 @@ sealed abstract class MyList[+A] {
   @throws[NoSuchElementException]("if list is empty or index is greater than or equal to size")
   @throws[IllegalArgumentException]("if index is less than 0")
   def apply(i: Int): A =
+    require(i > -1)
     if i >= length then throw new NoSuchElementException("i larger than length")
     @tailrec
     def loop(i: Int, list: MyList[A]): A = list match
@@ -140,8 +141,12 @@ case object Empty extends MyList[Nothing] {
   def head: Nothing = throw new NoSuchElementException("head of empty list")
   def tail: Nothing = throw new NoSuchElementException("tail of empty list")
   override def apply(i: Int): Nothing = throw new NoSuchElementException("apply on empty list")
-  override def take(n: Int): MyList[Nothing] = this
-  override def drop(n: Int): MyList[Nothing] = this
+  override def take(n: Int): MyList[Nothing] =
+    require(n > -1)
+    this
+  override def drop(n: Int): MyList[Nothing] =
+    require(n > -1)
+    this
   override def length: Int = 0
   override def reverse: MyList[Nothing] = this
   override def append[B](m: MyList[B]): MyList[B] = m
@@ -150,7 +155,7 @@ case object Empty extends MyList[Nothing] {
 }
 
 object MyList {
-  def apply[A](elems: A*): MyList[A] = elems.foldLeft(empty[A])((l, e) => e :: l)
+  def apply[A](elems: A*): MyList[A] = elems.foldLeft(empty[A])((l, e) => e :: l).reverse
 
   def empty[A]: MyList[A] = Empty
 
