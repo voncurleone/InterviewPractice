@@ -118,18 +118,7 @@ sealed abstract class MyList[+A] {
 case class Cons[A](head: A, tail: MyList[A]) extends MyList[A] {
   @targetName("Cons")
   def ::[B >: A](elem: B): MyList[B] = Cons(elem, this)
-  //@targetName("append")
-  //def +:[B >: A](elem: B): MyList[B] = ???
-  //def toList: List[A] = ???
   def isEmpty: Boolean = false
-  //def apply(i: Int): A = ???
-  //def take(n: Int): MyList[A] = ???
-  //def drop(n: Int): MyList[A] = ???
-  //def length: Int = ???//1 + tail.length
-  //def reverse: MyList[A] = ???
-  //def append[B >: A](m: MyList[B]): MyList[B] = ???
-  //def contains[B >: A](target: B): Boolean = head == ???//target || tail.contains(target)
-  //def mkString(init: String, sep: String, end: String): String = ???
 }
 case object Empty extends MyList[Nothing] {
   @targetName("Cons")
@@ -159,14 +148,39 @@ object MyList {
 
   def empty[A]: MyList[A] = Empty
 
+  //non tail recursive flatten
+  /*def flatten[A](l: MyList[MyList[A]]): MyList[A] = l match
+    case Empty => Empty
+    case Cons(head, tail) => head.append(flatten(tail))*/
+
   def flatten[A](l: MyList[MyList[A]]): MyList[A] =
-    if l.isEmpty then return empty[A]
     @tailrec
-    def loop(list: MyList[MyList[A]], inList: MyList[A], acc: MyList[A] = empty[A]): MyList[A] = list match
-      case Cons(head, tail) => inList match
-        case Cons(inHead, inTail) => loop(list, inTail, inHead :: acc)
-        case Empty => loop(tail, head, acc)
+    def loop(list: MyList[MyList[A]], acc: MyList[A] = Empty): MyList[A] = list match
       case Empty => acc.reverse
-    loop(l.tail, l.head)
+      case Cons(head, tail) =>
+        @tailrec
+        def loop2(inList: MyList[A], inAcc: MyList[A] = acc): MyList[A] = inList match
+          case Empty => inAcc
+          case Cons(head, tail) => loop2(tail, head :: inAcc)
+        loop(tail, loop2(head))
+    loop(l)
+
+  //exercises
+  def removeDupes[A](l: MyList[A]): MyList[A] =
+    @tailrec
+    def loop(list: MyList[A], acc: MyList[A] = Empty, set: Set[A] = Set()): MyList[A] = list match
+      case Cons(head, tail) =>
+        if set.contains(head) then loop(tail, acc, set)
+        else loop(tail, head :: acc, set + head)
+      case Empty => acc.reverse
+    loop(l)
+
+  def deleteMiddle[A](l: MyList[A]): MyList[A] =
+    if l.length % 2 == 0 then ???
+    else ???
+
+  def partition[A: Ordering](n: Int, l: MyList[A]): MyList[A] = ???
+  def sum[A: Numeric](l: MyList[A], l2: MyList[A]): MyList[A] = ???
+  def palindrome[A](l: MyList[A]): MyList[A] = ???
 }
 
