@@ -242,7 +242,7 @@ class MyListSuite extends AnyWordSpec {
       }
 
       "delete middle removes the one elem in a list with an odd length" in {
-        MyList.deleteMiddle(three) should === (MyList(1,2))
+        MyList.deleteMiddle(three) should === (MyList(1,3))
       }
 
       "delete middle removes the middle 2 elements" in {
