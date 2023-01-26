@@ -3,6 +3,7 @@ package com.linkedlist
 import com.linkedlist.MyList.empty
 
 import scala.annotation.{tailrec, targetName}
+import scala.math.Ordered.orderingToOrdered
 
 sealed abstract class MyList[+A] {
   @targetName("Cons")//prepend
@@ -176,11 +177,48 @@ object MyList {
     loop(l)
 
   def deleteMiddle[A](l: MyList[A]): MyList[A] =
-    if l.length % 2 == 0 then ???
-    else ???
+    if l.isEmpty then return empty[A]
+    val mid = l.length / 2
+    if l.length % 2 == 0 then
+      val front = l.take(mid - 1)
+      val end = l.drop(mid + 1)
+      front.append(end)
+    else
+      val front = l.take(mid)
+      val end = l.drop(mid + 1)
+      front.append(end)
 
-  def partition[A: Ordering](n: Int, l: MyList[A]): MyList[A] = ???
-  def sum[A: Numeric](l: MyList[A], l2: MyList[A]): MyList[A] = ???
-  def palindrome[A](l: MyList[A]): MyList[A] = ???
+  def partition[A: Ordering](n: A, l: MyList[A]): MyList[A] =
+    @tailrec
+    def loop(list: MyList[A], acc: MyList[A] = empty[A]): MyList[A] = list match
+      case Cons(head, tail) =>
+        if n <= head then loop(tail, head +: acc)
+        else loop(tail, head :: acc)
+      case Empty => acc
+    loop(l)
+
+  def sum(l1: MyList[Int], l2: MyList[Int]): MyList[Int] =
+    @tailrec
+    def loop(l1: MyList[Int], l2: MyList[Int], acc: MyList[Int] = Empty, carry: Int = 0): MyList[Int] = (l1, l2) match
+      case (Cons(h1, t1), Cons(h2, t2)) =>
+        if h1 + h2 + carry > 9 then
+          loop(t1, t2, (h1 + h2 + carry) % 10 :: acc, 1)
+        else loop(t1, t2, h1 + h2 + carry :: acc)
+      case (Empty, Cons(h2, t2)) =>
+        if h2 + carry > 9 then
+          loop(Empty, t2, (h2 + carry) % 10 :: acc, 1)
+        else loop(Empty, t2, h2 + carry :: acc)
+      case (Cons(h1, t1), Empty) =>
+        if h1 + carry > 9 then
+          loop(Empty, t1, (h1 + carry) % 10 :: acc, 1)
+        else loop(Empty, t1, h1 + carry :: acc)
+      case (Empty, Empty) =>
+        if carry != 0 then (carry :: acc).reverse
+        else acc.reverse
+    loop(l1,l2)
+
+  def palindrome[A](l: MyList[A]): Boolean =
+    if l == l.reverse then true
+    else false
 }
 
