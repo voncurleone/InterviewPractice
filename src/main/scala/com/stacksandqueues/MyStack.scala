@@ -1,17 +1,25 @@
 package com.stacksandqueues
 
 class MyStack[A]{
-  var stack: List[A] = Nil
+  private var stack: List[A] = Nil
   
   @throws[IllegalStateException]("stack is empty")
-  def pop: A = ???
+  def pop: A =
+    if isEmpty then throw new IllegalStateException("stack is empty")
+    else 
+      val ret = stack.head
+      stack = stack.tail
+      ret
   
-  def push(elem: A): Unit = ???
+  def push(elem: A): Unit =
+    stack = elem :: stack
   
   @throws[IllegalStateException]("stack is empty")
-  def peek: A = ???
+  def peek: A =
+    if isEmpty then throw new IllegalStateException("stack is empty")
+    else stack.head
   
-  def isEmpty: Boolean = ???
+  def isEmpty: Boolean = stack.isEmpty
 }
 
 object MyStack {
