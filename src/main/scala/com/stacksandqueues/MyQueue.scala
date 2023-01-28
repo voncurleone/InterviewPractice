@@ -3,8 +3,8 @@ package com.stacksandqueues
 import com.stacksandqueues.MyQueue.fillFront
 
 class MyQueue[A] {
-  var front: List[A] = Nil
-  var end: List[A] = Nil
+  private var front: List[A] = Nil
+  private var end: List[A] = Nil
 
   @throws[IllegalStateException]("stack is empty")
   def pop: A =
