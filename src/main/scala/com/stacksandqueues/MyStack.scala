@@ -25,3 +25,9 @@ class MyStack[A]{
 object MyStack {
   def apply[A](): MyStack[A] = new MyStack[A]
 }
+
+/*
+1) Multiple stacks could be implemented using one array by tracking the index of each stack base 
+  along with the index of the top of each stack. Be sure that one stack doesn't grow to the point where 
+  it reaches a point in the array containing another stack
+*/
