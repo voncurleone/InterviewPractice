@@ -68,5 +68,25 @@ class MyStackSuite extends AnyWordSpec {
 
       s.isEmpty should === (true)
     }
+
+    "implement sort" should {
+      "sort the stack" in {
+        val stack = MyStack[Int]()
+
+        stack.push(5)
+        stack.push(3)
+        stack.push(4)
+        stack.push(1)
+        stack.push(2)
+
+        MyStack.sort(stack)
+
+        stack.pop should === (1)
+        stack.pop should === (2)
+        stack.pop should === (3)
+        stack.pop should === (4)
+        stack.pop should === (5)
+      }
+    }
   }
 }
