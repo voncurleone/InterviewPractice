@@ -31,7 +31,7 @@ class AnimalShelterQueue {
     def loop(l: MyList[Animal], acc: MyList[Animal] = Empty): Option[Dog] = l match
       case Empty => None
       case Cons(head: Dog, tail) =>
-        front = acc.append(tail).reverse
+        front = acc.reverse.append(tail)
         Some(head)
       case Cons(head, tail) => loop(tail, head :: acc)
     loop(front)
@@ -44,7 +44,7 @@ class AnimalShelterQueue {
     def loop(l: MyList[Animal], acc: MyList[Animal] = Empty): Option[Cat] = l match
       case Empty => None
       case Cons(head: Cat, tail) =>
-        front = acc.append(tail).reverse
+        front = acc.reverse.append(tail)
         Some(head)
       case Cons(head, tail) => loop(tail, head :: acc)
     loop(front)
