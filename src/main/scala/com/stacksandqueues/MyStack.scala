@@ -1,5 +1,7 @@
 package com.stacksandqueues
 
+import scala.math.Ordered.orderingToOrdered
+
 class MyStack[A]{
   private var stack: List[A] = Nil
   
@@ -20,10 +22,25 @@ class MyStack[A]{
     else stack.head
   
   def isEmpty: Boolean = stack.isEmpty
+
+  def size: Int = stack.size
 }
 
 object MyStack {
   def apply[A](): MyStack[A] = new MyStack[A]
+
+  def sort[A: Ordering](unsorted: MyStack[A]): Unit =
+    val sorted = MyStack[A]()
+
+    while(!unsorted.isEmpty) {
+      val temp = unsorted.pop
+      while(!sorted.isEmpty && temp > sorted.peek) {
+        unsorted.push(sorted.pop)
+      }
+      sorted.push(temp)
+    }
+
+    unsorted.stack = sorted.stack
 }
 
 /*
