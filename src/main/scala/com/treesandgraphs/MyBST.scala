@@ -16,14 +16,16 @@ sealed trait MyBST[+A] {
   def inOrder: String = ???
   def preOrder: String = ???
   def postOrder: String = ???
-
-  override def equals(obj: Any): Boolean = ??? //might not need this
+  
   override def toString: String = inOrder
 }
 case class Branch[A](elem: A, var left: MyBST[A] = Leaf, var right: MyBST[A] = Leaf) extends MyBST[A] {
   def depth =
-    if left.depth > right.depth then left.depth + 1
+    if left == Leaf && right == left then 0
+    else if left.depth > right.depth then left.depth + 1
     else right.depth + 1
+    /*if left.depth > right.depth then left.depth + 1
+    else right.depth + 1*/
 }
 case object Leaf extends MyBST[Nothing] {
   def depth: Int = 0
