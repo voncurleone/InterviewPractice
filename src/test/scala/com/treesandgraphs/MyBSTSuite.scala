@@ -17,7 +17,7 @@ class MyBSTSuite extends AnyWordSpec {
       }
 
       "return 1 for a branch with no children" in {
-        Branch(1).depth should === (1)
+        Branch(1).depth should === (0)
       }
 
       "return correct depth for branch with multiple children" in {
@@ -26,11 +26,11 @@ class MyBSTSuite extends AnyWordSpec {
         val root = Branch(6, left, right)
         val root2 = Branch(10, Branch(5, Branch(3)))
 
-        root.depth should === (4)
-        left.depth should === (1)
-        right.depth should === (3)
-        right.right.depth should === (2)
-        root2.depth should === (3)
+        root.depth should === (3)
+        left.depth should === (0)
+        right.depth should === (2)
+        right.right.depth should === (1)
+        root2.depth should === (2)
       }
     }
 
